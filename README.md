@@ -1,0 +1,2 @@
+# event_management_app
+イベント管理アプリのサンプルリポジトリ
