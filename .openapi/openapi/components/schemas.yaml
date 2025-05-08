@@ -1,0 +1,14 @@
+Success:
+  type: object
+  required:
+    - code
+  properties:
+    code:
+      type: integer
+Error:
+  type: object
+  required:
+    - code
+  properties:
+    code:
+      type: integer

@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+
+  openapi:
+    build: ./.openapi
+    command: >
+      ash -c "npm install -d && node watcher.js"
+    working_dir: /openapi/command
+    volumes:
+      - ./.openapi:/openapi
+      - ./api:/api
+      - ./app:/app
+    tty: true
+
+  db:
+    image: postgres:latest
+    environment:
+      TZ: Asia/Tokyo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.bin/posgresql:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      retries: 3
+
+  api: 
+    build:
+     context: ./api
+     dockerfile: local.Dockerfile
+    command: watchexec -w . --force-poll 100 -r go run main.go
+    ports:
+      - 6262:6262
+    volumes:
+      - ./api:/usr/src/app
+    depends_on:
+      db:
+        condition: service_healthy
+    tty: true
+
+  # app: 
+  #   image: node:22
+  #   command: >
+  #       bash -c "npm install && npm run dev"
+  #   ports:
+  #     - 4000:3000
+  #   working_dir: /app
+  #   volumes:
+  #     - ./app:/app

@@ -1,0 +1,13 @@
+echo:
+  get:
+    summary: Health Check
+    operationId: echo
+    tags:
+      - echo
+    responses:
+      '200':
+        description: 成功レスポンス
+        content:
+          application/json:
+            schema:
+              $ref: "./components/schemas.yaml#/Success"
