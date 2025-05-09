@@ -19,7 +19,7 @@ func Init() error {
 	user := os.Getenv("DATABASE_USERNAME")
 	pass := os.Getenv("DATABASE_PASSWORD")
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s TimeZone=Asia/Tokyo", host, user, pass, name, port)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Tokyo", host, user, pass, name, port)
 
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
