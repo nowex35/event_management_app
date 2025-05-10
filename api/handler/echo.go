@@ -12,6 +12,6 @@ type Route struct {
 func (h Route) Echo(ctx echo.Context, request openapi.EchoRequestObject) (openapi.EchoResponseObject, error) {
 
 	return openapi.Echo200JSONResponse{
-		Code: 0,
+		Code: 200,
 	}, nil
 }
